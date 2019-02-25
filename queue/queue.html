@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>数据结构</title>
+    <meta charset="utf-8">
+    <meta name="author" content="陆海波" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="zh-CN.css" type="text/css" />
+    <link rel="stylesheet" href="extra.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# 数据结构
+## 队列
+### 陆海波
+### 2018/4/9
+
+---
+
+
+
+
+## 队列 Queue
+
+- 队列是一种操作受限的线性表, 特殊之处在于它只允许在表的一端 进行删除操作, 而在表的另一端 (rear) 进行插入操作
+- 进行插入操作的端称为队尾 (rear), 进行删除操作的端称为队头 (front).
+
+--
+
+.red[队列的操作使得元素具有先进先出的特点 (Fist In First Out, FIFO)]
+
+--
+
+![](http://hblu.coding.me/sitds16/_images/basicqueue.png)
+
+---
+## 队列的基本操作
+
+.pull-left[
+- `Queue()` 创建一个空队列, 无返回值.
+- `enqueue(item)` 向队列中添加元素 `item`, 无返回值.
+- `dequeue()` 移除栈顶元素并将其返回.
+- `peek()` 返回队头元素值, 不修改队列中数据.
+- `isEmpty()` 判断队列是否为空, 返回布尔值.
+- `size()` 返回队列中元素个数.
+]
+
+--
+.pull-right[
+```python
+class  Queue:
+    def __init__(self):
+        self.items = []
+
+    def isEmpty(self):
+        return self.items == []
+
+    def enqueue(self, item):
+        self.items.insert(0, item)
+
+    def dequeue(self):
+        return self.items.pop()
+
+    def peek(self):
+        return self.items[-1]
+
+    def size(self):
+        return len(self.items)
+```
+]
+
+--
+
+思考: 基于上面的队列实现, 入队和出队操作的时间负责度是?
+
+---
+## 队列的应用: Hot Potato (烫手的山芋)
+
+&lt;img src="http://hblu.coding.me/sitds16/_images/hotpotato.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+## 队列的应用: Hot Potato (烫手的山芋)  
+
+- 使用队列描述"传递"过程
+  
+&lt;img src="http://hblu.coding.me/sitds16/_images/namequeue.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+## 队列的应用: Hot Potato (烫手的山芋)
+
+```python
+def hotPotato(namelist, num):
+    q = Queue()
+    for name in namelist:
+        q.enqueue(name)
+
+    while q.size() &gt; 1:
+        for i in range(num):
+            q.enqueue(q.dequeue())
+
+        q.dequeue()
+
+    return q.dequeue()
+
+print(hotPotato(["Bill","David","Susan","Jane","Kent","Brad"],3))
+```
+
+---
+## 练习: 约瑟夫问题（Josephus Problem)
+
+据说著名犹太历史学家 Josephus有过以下的故事：在罗马人占领乔塔帕特后，39 个犹太人与Josephus及他的朋友躲到一个洞中，39个犹太人决定宁愿死也不要被敌人到，于是决定了一个自杀方式，41个人排成一个圆圈，由第1个人开始报数，每报数到第3人该人就必须自杀，然后再由下一个重新报数，直到所有人都自杀身亡为止。
+
+然而Josephus 和他的朋友并不想遵从，Josephus要他的朋友先假装遵从，他将朋友与自己安排在第16个与第31个位置，于是逃过了这场死亡游戏。
+
+编写函数 `Josephus()`, 利用队列计算出最后自杀的人是第16与第31个位置.
+
+---
+## 练习: 约瑟夫问题（Josephus Problem)
+
+```python
+def Josephus(namelist, num = 3):
+
+    #write your code here
+
+
+
+print(Josephus(range(1,42), 3))
+```
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

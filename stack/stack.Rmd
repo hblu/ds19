@@ -1,0 +1,278 @@
+---
+title: "数据结构"
+subtitle: "栈"
+author: "陆海波"
+date: "2018/4/2"
+output:
+  xaringan::moon_reader:
+    css: [default, zh-CN.css, extra.css]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(kableExtra)
+library(knitr)
+```
+
+## 栈 Stack
+
+- 栈（stack）又名堆栈, 它是一种运算受限的线性表. 仅允许在表的同一端进行插入和删除运算. 这一端被称为栈顶, 相对地, 把另一端称为栈底.
+- 向一个栈插入新元素又称作进栈、入栈或压栈, 它是把新元素放到栈顶元素的上面, 使之成为新的栈顶元素；
+- 从一个栈删除元素又称作出栈或退栈, 它是把栈顶元素删除掉, 使其相邻的元素成为新的栈顶元素.
+
+--
+
+.red[栈的操作使得元素具有后进先出的特点 (Last In First Out, LIFO)]
+
+---
+## 栈的基本操作
+
+.pull-left[
+- `Stack()` 创建一个空栈, 无返回值.
+- `push(item)` 向栈中添加元素 `item`, 无返回值.
+- `pop()` 移除栈顶元素并将其返回.
+- `peek()` 返回栈顶元素值, 不修改栈中数据.
+- `isEmpty()` 判断栈是否为空, 返回布尔值.
+- `size()` 返回栈中元素个数.
+]
+
+--
+.pull-right[
+```python
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def isEmpty(self):
+        return self.items == []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def peek(self):
+        return self.items[-1]
+
+    def size(self):
+        return len(self.items)
+```
+]
+
+---
+## 栈的基本操作
+
+**思考**
+
+.pull-left[
+上面的栈实现是将列表的尾部当成栈顶. 如果将列表的头部看成栈顶上段代码该如何修改? 这会对我们的运行效率产生什么影响?
+]
+
+.pull-right[
+```python
+class Stack:
+	     def __init__(self):
+	         self.items = []
+	
+	     def isEmpty(self):
+	         return self.items == []
+	
+	     def push(self, item):
+	         self.items.insert(0,item)
+	
+	     def pop(self):
+	         return self.items.pop(0)
+	
+	     def peek(self):
+	         return self.items[0]
+	
+	     def size(self):
+	         return len(self.items)
+```
+]
+
+---
+## 练习
+
+.pull-left[
+- 在执行了下段代码后栈顶元素是?
+
+```python
+m = Stack()
+m.push('x')
+m.push('y')
+m.pop()
+m.push('z')
+m.peek()
+```
+]
+
+--
+
+.pull-right[
+- 在执行了下段代码后栈顶元素是?
+
+```python
+m = Stack()
+m.push('x')
+m.push('y')
+m.push('z')
+
+while not m.isEmpty():
+        m.pop()
+        m.pop()
+```
+]
+
+---
+## 栈的应用: 数学表达式的表示与计算
+
+- 中缀表达式 $$(3-5)\times(6+17\times4)/3$$
+
+--
+- 前缀表达式
+$$/ \times-3~~5+6\times17~~4~~3$$
+
+--
+- 后缀表达式
+$$3~~5-6~~17~~4\times+\times3/$$
+
+--
+
+.red[中缀表达式的主要缺点:] 需要通过括号、运算优先级、运算符的结合律才能表示所有可能的运算顺序
+
+---
+## 中缀表达式到前缀、后缀表达式的转换
+
+```{r fig.width=4, fig.width=1.5, echo=FALSE, fig.align='center'}
+include_graphics("moveleft.png")
+```
+
+--
+
+```{r fig.width=4, fig.width=1.5, echo=FALSE, fig.align='center'}
+include_graphics("moveright.png")
+```
+
+
+---
+## 中缀表达式到前缀、后缀表达式的转换
+
+
+```{r out.width="90%", echo=FALSE, fig.align='center'}
+include_graphics("complexmove.png")
+```
+
+---
+## 中缀表达式转后缀表达式算法
+
+1. 创建存放运算符的空栈 `opstack`. 创建存放后缀表达式的空列表.
+
+2. 依次扫描中缀表达式中每一个元素,
+    - 如果是运算对象, 将其添加到输出列表的最后.
+    - 如果是左括号, 压入栈 `opstack`.
+    - 如果是右括号, 弹出栈 `opstack` 中元素, 直到移除对应的左括号. 将弹出的运算符添加到输出列表的最后.
+    - 如果是运算符, `+,-,*,/`, 压入栈 `opstack`. 但首先要移除栈 `opstack` 顶运算符优先级高于或等于当前运算符的运算符, 并将它们添加到输出列表的最后.
+3. 当中缀表达式扫描完毕, 检查栈 `opstack`, 将栈中剩余运算符依次移出, 并添加到输出列表的最后.
+
+---
+## 中缀表达式转后缀表达式算法
+
+
+```{r out.width="90%", echo=FALSE, fig.align='center'}
+include_graphics("intopost.png")
+```
+
+---
+
+```python
+def infixToPostfix(infixexpr):
+    prec = {"*": 3, "/": 3, "+": 2, "-": 2, "(": 1}
+    operators = "+-*/()"
+    opStack = Stack()
+    postfixList = []
+
+    for token in infixexpr:
+        if token not in operators:
+            postfixList.append(token)
+        elif token == '(':
+            opStack.push(token)
+        elif token == ')':
+            topToken = opStack.pop()
+            while topToken != '(':
+                postfixList.append(topToken)
+                topToken = opStack.pop()
+        else:
+            while (not opStack.isEmpty()) and \
+               (prec[opStack.peek()] >= prec[token]):
+                  postfixList.append(opStack.pop())
+            opStack.push(token)
+
+    while not opStack.isEmpty():
+        postfixList.append(opStack.pop())
+    return " ".join(postfixList)
+
+print(infixToPostfix("A*B+C*D"))
+```
+
+---
+## 后缀表达式的计算
+
+```{r out.width="55%", echo=FALSE, fig.align='center'}
+include_graphics("evalpostfix1.png")
+```
+
+---
+## 后缀表达式的计算
+
+假设后缀表达式为一个由空格分割的字符串组成. 运算符包括 `+,-,*,/`, 且所有运算对象为 0-9 的整数.
+
+- 创建空栈 `operandStack`.
+- 用字符串方法 `split` 将输入的后缀表达式按空格分割为一列表.
+- 依次扫描列表中每个元素,
+    - 如果是运算对象, 将其转换为整数, 并压入栈 `operandStack`.
+    - 如果是运算符, 弹出栈 `operandStack` 中两个元素: 第一次弹出的为第二个运算对象, 第二次弹出的是第一个运算对象. 将这两个运算对象的计算结果再次压入栈 `operandStack` 中.
+- 当扫描完后缀表达式中的所有元素, 弹出栈 `operandStack` 中元素, 即为返回值.
+
+---
+
+```python
+def postfixEval(postfixExpr):
+    operandStack = Stack()
+    tokenList = postfixExpr.split()
+
+    for token in tokenList:
+        if token in "0123456789":
+            operandStack.push(int(token))
+        else:
+            operand2 = operandStack.pop()
+            operand1 = operandStack.pop()
+            result = doMath(token,operand1,operand2)
+            operandStack.push(result)
+    return operandStack.pop()
+
+def doMath(op, op1, op2):
+    if op == "*":
+        return op1 * op2
+    elif op == "/":
+        return op1 / op2
+    elif op == "+":
+        return op1 + op2
+    else:
+        return op1 - op2
+
+print(postfixEval('4 5 6 * +'))
+```
+
+---
+## 练习
+
+- 将下面中缀表达式转为后缀表达式 $$10+3\times5/(16-4)$$
+
+--
+- 计算后缀表达式的值 $$17~~10~+~3~*~9~/$$

@@ -1,0 +1,693 @@
+---
+title: "数据结构"
+subtitle: "Python 数据结构介绍"
+author: "陆海波"
+date: "2018/3/8"
+output:
+  xaringan::moon_reader:
+    css: [default, zh-CN.css, extra.css]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(kableExtra)
+```
+
+## Python 基本数据结构
+
+![](pic/data_structure_picture.png)
+
+---
+## 原子类型数据结构 Primitive Data Structures
+
+--
+- 是最原始的或基本的数据结构
+
+--
+- 是数据处理的基石, 仅有纯粹、简单的数据
+
+--
+- Python 有下面四种原子类型数据结构
+
+--
+  - .red[整数型] .c[Integers]
+
+--
+  - .red[浮点型] .c[Float]
+
+--
+  - .red[字符型] .c[Strings]
+
+--
+  - .red[布尔型] .c[Boolean]
+
+
+---
+## 整数型 Integers
+
+- 可以使用整数表示数值数据, 更具体地说, 可以使用从负无穷到正无穷的整数, 如 .c[4, 5] 或 .c[-1]
+
+--
+
+## 浮点型 Float
+
+- 浮点代表浮点数.  可以将它用于有理数, 通常以小数点结尾, 如 .c[1.11] 或 .c[3.14]
+
+--
+
+.pull-left[
+```python
+# Floats
+x = 4.0
+y = 2.0
+
+# Addition
+print(x + y)
+
+# Subtraction
+print(x - y)
+```
+]
+
+
+.pull-right[
+```python
+# Multiplication
+print(x * y)
+
+# Returns the quotient
+print(x / y)
+
+# Returns the remainder
+print(x % y) 
+
+# Absolute value
+print(abs(x))
+```
+]
+
+---
+## 动态编程语言
+
+- 在 Python 中, 不必明确声明变量或数据的类型, 那是因为 Python 是一种 .red[动态编程语言] 
+
+--
+
+.quote[
+动态编程语言是高级程序设计语言的一个类别，在计算机科学领域已被广泛应用。它是一类 .red[在运行时可以改变其结构] 的语言：例如新的函数、对象、甚至代码可以被引进，已有的函数可以被删除或是其他结构上的变化。动态语言目前非常具有活力。众所周知的ECMAScript（JavaScript）便是一个动态语言，除此之外如PHP、Ruby、Python等也都属于动态语言，而C、C++等语言则不属于动态语言。
+
+--- 维基百科
+]
+
+[**参考: 弱类型、强类型、动态类型、静态类型语言的区别是什么？**](https://www.zhihu.com/question/19918532)
+
+
+---
+## 字符型 String
+
+- 字符串是字母, 单词或其他字符的集合. 在 Python 中, 可以通过在一系列字符外加上单引号或双引号来创建字符串. 如: .c['python']，.c["data structure"]
+
+--
+
+- 可以使用 .c[+] 运算来连接两个或多个字符串
+
+
+```{r engine='python'}
+x = 'Python'
+y = 'Data Structure'
+print(x + ' & ' + y)
+```
+
+--
+
+```{r engine='python'}
+#字符串也可以是数字字符
+print('20' + '18')
+```
+
+
+---
+## 字符型 String
+
+- 可以使用 .c[*] 重复某个字符串一定次数
+  
+```{r engine='python'}
+print(x*2)
+```
+
+--
+
+- 使用切片操作 (slice) 截取字符串的一部分
+
+--
+
+.pull-left[  
+```{r engine='python'}
+print(x[2:])
+
+print(x[-3:])
+```
+]
+
+--
+
+.pull-right[
+```{r engine='python'}
+print(x[1:-2])
+
+print(x[0] + x[-1])
+```
+]
+
+---
+## 字符型 String
+
+.darkblue[切片操作练习] 
+
+- 下面代码输出的结果是?
+
+--
+  - .c[print(x[-3:])]
+
+--
+  - .c[print(x[:3])]
+
+--
+  - .c[print(x[:-3])]
+
+--
+  - .c[print(x[:])]
+  
+--
+  - .c[print(x[-5:3])]
+
+
+---
+## 字符型 String
+
+.pull-left[
+```{r engine='python'}
+print(x[-3:])
+print(x[:3])
+print(x[:-3])
+```
+]
+
+.pull-right[
+```{r engine='python'}
+print(x[:])
+print(x[-5:3])
+```
+]
+
+
+---
+## 字符型 String
+
+- Python 还有许多内置的方法或帮助函数来操作字符串
+  - 查找, 替换
+  - 大小写转换
+  - ...
+  
+.pull-left[
+```{r engine='python'}
+str1 = 'python'
+str2 = '2018'
+print(str.capitalize(str1))
+print(len(str1))
+```
+]
+
+.pull-right[
+```{r engine='python'}
+print(str1.isdigit())
+print(str2.isdigit())
+```
+]
+
+
+---
+## 字符型 String
+
+- 查找: 返回找到子串的字符串中最低的索引或位置
+
+```{r engine='python'}
+str1= "cookie"
+str2 = "cook"
+str3 = "I got you a cookie"
+
+print(str1.find(str2))
+print(str3.find(str2))
+```
+
+[**注: 可以在这里找到关于字符串方法的详细列表**](https://docs.python.org/3/library/stdtypes.html#string-methods)
+
+
+---
+## 布尔型 Boolean
+
+- 这种内置数据类型取值为 True 或 False
+- 这些值通常可以与整数 1 或 0 互换
+- 布尔值在条件表达式和比较表达式中很有用
+
+.pull-left[
+```{r engine='python'}
+x, y = 4, 2
+print(x == y)
+print(x > y)
+```
+]
+
+.pull-right[
+```{r engine='python'}
+z = (x == y)
+if z:
+  print("Cookie")
+else:
+  print("No Cookie")
+```
+]
+
+
+---
+## 数据类型转换
+
+- 有时, 你需要将整数转换为浮点数, 在这种情况下, 可以转换变量的数据类型
+
+--
+
+- 在 Python 中可以使用内置函数 .c[type] 检查对象的类型
+
+--
+
+```{r engine='python'}
+i = 4.0
+print(type(i))
+```
+
+---
+## 数据类型转换
+
+.darkblue[隐式数据类型转换]
+
+--
+- 这是一个自动数据转换, 编译器会自动处理
+
+--
+
+```{r engine='python'}
+x = 4.0
+y = 2
+z = x/y
+```
+
+--
+
+```{r engine='python'}
+print(z)
+print(type(z))
+```
+
+---
+## 数据类型转换
+
+.darkblue[显式数据类型转换]
+
+--
+- 用户自定义的数据类型转换,  必须明确通知编译器更改某些实体的数据类型
+
+--
+
+```python
+x = 2
+y = "The Godfather: Part"
+
+fav_movie = y + x
+```
+
+--
+
+```python
+---------------------------------------------------------------------------
+
+TypeError                                 Traceback (most recent call last)
+
+<ipython-input-51-b8fe90df9e0e> in <module>()
+      1 x = 2
+      2 y = "The Godfather: Part "
+----> 3 fav_movie = y + x
+
+
+TypeError: Can't convert 'int' object to str implicitly
+```
+
+
+---
+## 数据类型转换
+
+.darkblue[显式数据类型转换]
+
+- 上面的例子给出了一个错误, 这是因为编译器不知道是应该执行数字的加法还是执行字符串的连接
+
+- 为了解决这个问题, 首先需要将 .c[int] 转换为 .c[string], 然后才能够进行串联
+
+```{r engine='python'}
+x = 2
+y = "The Godfather: Part "
+fav_movie = y + str(x)
+print(fav_movie)
+```
+
+---
+## 非原子类型数据结构
+
+- 非原子类型是一类复杂的数据结构. 不仅仅存储一个值, 而是存储各种格式的值
+
+- 在传统的计算机科学里, 非原子类型数据结构分为:
+  - Arrays (数组)
+  - Lists (列表)
+  - Files (文件)
+
+
+---
+## 数组 Array
+
+- Python 中的数组是表示一族基本数据结构的一种方式
+- 数组中的所有元素必须有相同的数据类型
+- 但是, 与其他编程语言 (如 C++ 或 Java) 不同, 在 Python 中并不常使用数组
+
+--
+
+.quote[
+一般来说, 当人们说起 Python 中的数组时, 他们实际上是指列表 (List). 但是, 它们之间有一个根本的区别. 对于 Python 而言, 数组可以被看作是存储某种列表的更有效方式. 不过, 这种类型的列表具有相同数据类型的元素.
+]
+
+---
+## 数组 Array
+
+- 在 Python 中, 使用数组需要导入特定的 .red[模块 (module)]
+
+```{r engine='python'}
+# 导入模块 array
+import array
+# 使用模块 arr 中的函数 array 创建整数型数组
+a = array.array("I", [3, 6, 9]) 
+print(type(a))
+print(a)
+```
+
+--
+
+- [.red[参考: Python 数组文档]](https://docs.python.org/3.4/library/array.html)
+
+
+---
+## 列表 List
+
+- Python中 的列表用于存储 .red[异质] (heterogeneous) 数据
+
+--
+- 这些数据是 .red[可变的] (mutable), 这意味着可以改变他们的内容而不改变他们的身份 (identity)
+
+--
+- 可以通过方括号.c[[]] 或 .c[list()] 来创建列表, 并用逗号分隔不同元素
+
+--
+- 列表是 Python 内置的数据结构: 不需要单独加载
+
+---
+## 列表 List
+
+.pull-left[
+```{r engine='python'}
+x = [] #创建空列表
+print(type(x))
+
+x1 = [1,2,3]
+print(type(x1))
+
+x2 = list([1, "apple", 3.0])
+print(type(x2))
+```
+]
+
+
+.pull-right[
+```{r engine='python'}
+print(x2[1])
+x2[1] = 'orange'
+print(x2)
+x2[0] = 'big'
+print(x2)
+```
+]
+
+
+---
+## 列表 List
+
+- Python 提供了许多 .red[函数] (functions) 和 .red[方法] (methods) 来操作和处理列表
+
+--
+- 使用 .c[append()] 方法在列表 .c[list_num] 末尾添加 .c[11]
+
+```{r engine='python'}
+list_num = [1,2,45,6,7,2,90,23,435]
+list_num.append(11) # 将 11 添加到列表末尾
+print(list_num)
+```
+
+--
+- 使用 .c[insert()] 方法在列表 .c[list_num] 的索引或位置 .c[0] 处插入 .c[11]
+
+```{r engine='python'}
+list_num.insert(0, 11)
+print(list_num)
+```
+
+
+---
+## 列表 List
+
+- 用 .c[remove()] 方法删除 .c[list_char] 中出现的第一个 .c['o']
+
+```{r engine='python'}
+list_char = ['c','o','o','k','i','e']
+list_char.remove('o')
+print(list_char)
+```
+
+--
+- 用 .c[pop()] 方法删除 .c[list_char] 中索引 .c[-2] 的元素
+
+```{r engine='python'}
+list_char.pop(-2)
+print(list_char)
+```
+
+
+---
+## 列表 List
+
+
+- 排序 .c[sort()]
+
+```{r engine='python'}
+list_num.sort()
+print(list_num)
+```
+
+--
+- 逆序 .c[reverse()]
+
+```{r engine='python'}
+list_num.reverse()
+print(list_num)
+```
+
+--
+
+- 如果想了解更多关于 Python 列表的知识, 可以阅读 [.red[18 个最常见的 Python 列表问题]](https://www.datacamp.com/community/tutorials/18-most-common-python-list-questions-learn-python)
+
+---
+## 数组 vs 列表
+
+- 问题: 既然列表这么好用, 那为什么还需要数组? 
+
+--
+
+- 原因在于列表和数组在操作方面有着根本的不同:
+
+--
+
+.quote[
+使用数组, 可以轻松地对其所有元素进行操作, 而列表不行! 这是由于数组中的元素类型相同, 而列表中的元素可以是异质的.
+]
+
+--
+
+```python
+array_char = array.array("u",["c","a","t","s"])
+array_char.tostring()
+print(array_char)
+```
+
+```python
+## array('u', 'cats')
+```
+
+
+---
+## 数组 vs 列表
+
+- 在处理大量同类数据类型时, 数组可能会非常有用
+- 由于 Python 不必单独记住每个元素的数据类型,  在某些场景中, 与列表相比, 数组可能会更快并且使用更少的内存
+
+--
+- Python 中还有一个专门处理数组的库 `NumPy`
+  - [Python Numpy 入门](https://www.datacamp.com/community/tutorials/python-numpy-tutorial)
+
+--
+
+```{r engine='python'}
+import numpy as np
+
+arr_a = np.array([3, 6, 9])
+arr_b = arr_a/3 # Performing vectorized (element-wise) operations 
+print(arr_b)
+```
+
+---
+## 线性与非线性数据结构
+
+- 传统上, 列表数据结构可以进一步分为线性和非线性数据结构
+
+--
+- .red[线性数据结构]: 数据元素按顺序组织, 且线性数据结构中的所有元素可以在一次运行期间遍历
+  - .red[栈] Stack
+  - .red[队列] Queue
+
+
+--
+- .red[非线性数据结构]: 数据元素不是按顺序组织, 即一个元素可以和多个元素连接, 以反映元素间的特殊关系. 非线性数据结构中的元素通常需要多次运行才能遍历
+  - .red[树] Tree
+  - .red[图] Graph
+
+---
+## 线性与非线性数据结构
+
+- 非线性数据结构及其概念可能相对复杂, 但由于其与现实世界模型的相似性而广泛使用
+
+---
+## 元组 Tuples
+
+- 元组是另一种基本数据类型, 它和列表的区别在于: 元组是 .red[不可变的 (immutable)], 不可添加、修改、删除其中元素
+
+--
+
+
+```{r engine='python'}
+x_tuple = 1,2,3,4,5
+y_tuple = ('c','a','k','e')
+print(x_tuple[0])
+print(y_tuple[3])
+```
+
+---
+## 元组 Tuples
+
+
+```python
+x_tuple[0] = 0 # Cannot change values inside a tuple
+```
+
+```python
+---------------------------------------------------------------------------
+
+TypeError                                 Traceback (most recent call last)
+
+<ipython-input-74-b5d6da8c1297> in <module>()
+      1 y_tuple[3]
+----> 2 x_tuple[0] = 0 # Cannot change values inside a tuple
+
+
+TypeError: 'tuple' object does not support item assignment
+```
+
+---
+## 元组 Vs 列表
+
+.darkblue[什么时候使用元组?]
+
+--
+- 元组是不可变的, 因此不能使用 .c[append()], .c[extend()], .c[remove()], .c[pop()] 等方法
+
+--
+- 可以对元组进行搜索; 也可以使用 .c[in] 判断某个元素是否属于一个元组
+
+--
+- 因此, 如果你定义了一组常量值, 而你要做的就是遍历它, 则使用元组而不是列表. 因为它比列表更快速, 也更安全, 因为元组不能被修改
+
+
+
+---
+## 字典 Dictionary
+
+- 如果你想实现类似电话簿的功能, 之前介绍的数据结构都不合适, 而 .red[字典] 正是你所需要的
+
+--
+
+- 字典是由 .red[键 (key)] - .red[值 (value)] 对组成的. 键用于标识 (identify) 元素, 值用于存储该元素的值
+
+--
+
+
+```{r engine='python'}
+x_dict = {'Edward':1, 'Jorge':2, 'Prem':3, 'Joe':4} # create a dictionary
+print(x_dict)
+print(x_dict['Edward']) # Prints the value stored with the key 'Edward'.
+del x_dict['Joe'] # Delete 'Joe'
+```
+
+---
+## 字典 Dictionary
+
+```{r engine='python'}
+print(len(x_dict)) # length of a dictionary
+print(x_dict.keys()) # print keys
+print(x_dict.values()) # print values
+```
+
+
+
+---
+## 集合 Sets
+
+- 集合是存储一组 .red[唯一] (unique) 对象的数据结构
+- 在创建只在数据集中保存唯一值的列表非常有用
+- 是一个 .red[无序集合], 但却是 .red[可变的], 这在创建一个巨大数据集时非常有用
+
+--
+
+```{r engine='python'}
+x_set = set('CAKE&COKE')
+y_set = set('COOKIE')
+
+print(x_set)
+print(y_set)
+```
+
+---
+## 集合 Sets
+
+```{r engine='python'}
+print(x_set - y_set) # All the elements in x_set but not in y_set
+print(x_set | y_set) # Unique elements in x_set or y_set or both
+print(x_set & y_set) # Elements in both x_set and y_set
+```
+

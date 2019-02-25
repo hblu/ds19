@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>数据结构</title>
+    <meta charset="utf-8">
+    <meta name="author" content="陆海波" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="zh-CN.css" type="text/css" />
+    <link rel="stylesheet" href="extra.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# 数据结构
+## 线性表的链式存储方式
+### 陆海波
+### 2018/4/16
+
+---
+
+
+
+
+## 线性表的实现方式
+
+在之前的讨论中, 我们都是使用 `python` 自带的列表 (`list`) 来实现栈与队列的抽象数据类型. 这是一个简单且强大的工具, 但并不是所有编程语言都自带一个列表的实现, 这时就需要通过编程自己实现.
+
+--
+
+.red[线性表的两种基本实现方式]
+- 将表中所有元素顺序地存放在一块连续的存储区里. 这样实现的表称为 .red[顺序表]. 在这种实现中, 元素间的关系由它们的存储顺序自然表示.
+- 将表中元素存放在通过链接构造的一系列存储块里 (存储区域不连续), 这样实现的表称为 .red[链接表], 简称*链表*.
+
+
+--
+.note[注: `Python` 的 `list` (列表) 和 `tuple` (元组) 就采用了顺序表的实现.]
+
+---
+## 顺序表的基本结构
+
+&lt;img src="http://hblu.coding.me/sitds16/_images/list.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+.red[顺序表的优缺点]
+
+- 最重要的优点是 `\(O(1)\)` 时间的定位元素访问 (.red[随机存储]). 很多简单操作的效率也比较高.
+- 最重要的缺点是插入、删除操作需要移动很多元素, 复杂度为 `\(O(n)\)`. (在尾端插入、删除的复杂度为 `\(O(1)\)`)
+
+--
+
+- 顺序表的优缺点都在于其元素存储的集中方式和连续性. 从缺点看, 这样的结构不够灵活, 不容易调整和变化. 如果在一个表的使用中经常需要修改结构, 用顺序表去实现就不太方便. 还有当程序需要巨大的线性表时, 采用顺序存储可能会造成存储管理方面的困难.
+
+---
+## 链接表 (Linked List)
+
+- 实现线性表的基本要求
+    - 能够找到表中的首元素
+    - 从表里的任一元素出发, 可以找到它之后的下一个元素
+
+--
+
+把表元素保存在连续的存储区里 (顺序表), 自然能够满足这两个需求, 其中元素间的顺序关联是隐含的. 但要满足这两种需求, 并不一定需要连续存储元素
+
+---
+## 链接表的基本结构
+
+- 把表中元素分别存储在一批独立的存储块 (称为表的 .red[节点]) 里
+- 在前一个节点里用链接的方式显示与下一个节点之间的关联
+
+&lt;img src="http://hblu.coding.me/sitds16/_images/idea2.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+--
+.note[链接技术是一个非常灵活的数据组织技术, 实现链接表有多重不同的方式. 下面讨论最简单的 .red[单链表], 其中在每个节点里记录着存储下一个节点的标识 (引用、链接).]
+
+---
+## 单链表
+
+&lt;img src="http://hblu.coding.me/sitds16/_images/linkedlist.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+.note[为了获取一个表, 只需要用一个变量保存这个表的 .red[头节点] 的位置 (引用、标识).]
+
+---
+## 节点 (Node) 类 
+
+.pull-left[
+结点是链表的基本构成单元. 每一个结点最少需要保存两个信息
+
+- .red[数据域]: 结点自身的信息
+- .red[链接域]: 指向下一个结点
+]
+
+--
+
+.pull-right[
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        # None 表示默认该结点没有后继结点
+        self.next = None 
+        
+    def getData(self):
+        return self.data
+
+    def getNext(self):
+        return self.next
+
+    def setData(self, newdata):
+        self.data = newdata
+
+    def setNext(self, newnext):
+        self.next = newnext
+```
+]
+
+---
+## 节点 (Node) 类 
+
+这样我们就可以创建结点了:
+
+```python
+temp = Node(93)
+```
+
+&lt;img src="http://hblu.coding.me/sitds16/_images/node.png" style="display: block; margin: auto;" /&gt;&lt;img src="http://hblu.coding.me/sitds16/_images/node2.png" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
