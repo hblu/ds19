@@ -2,7 +2,7 @@
 title: "数据结构"
 subtitle: "数据结构的基本概念"
 author: "陆海波"
-date: "2018/3/18"
+date: "2019/3/5"
 output:
   xaringan::moon_reader:
     css: [default, zh-CN.css, extra.css]
