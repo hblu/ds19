@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
     <title>数据结构</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="author" content="陆海波" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="zh-CN.css" type="text/css" />
@@ -189,17 +189,23 @@ for i in range(count):
 
 ```python
 import time
+
 start = time.time()
+
 count = 10**5
 nums = []
+
+
 for i in range(count):
     nums.append(i)
 nums.reverse()
+
+
 print(time.time()-start)
 ```
 
 ```
-## 0.0427048206329
+## 0.05805063247680664
 ```
 ]
 
@@ -208,15 +214,20 @@ print(time.time()-start)
 
 ```python
 start = time.time()
+
 count = 10**5
 nums = []
+
+
 for i in range(count):
     nums.insert(0,i)
+
+
 print(time.time()-start)
 ```
 
 ```
-## 4.54448390007
+## 3.0491793155670166
 ```
 ]
 
@@ -298,7 +309,7 @@ print(time.time()-now)
 ```
 
 ```
-## 0.53754401207
+## 0.3602447509765625
 ```
 ]
 
@@ -343,7 +354,7 @@ print(time.time()-now)
 ```
 
 ```
-## 0.00599002838135
+## 0.018012046813964844
 ```
 ]
 
@@ -683,8 +694,196 @@ for i in range(n):
 ```
 - 在最好情况下的时间复杂度是?
 - 在最差情况下的时间复杂度是?
-- 到底做了件什么事?
+- 到底做了件什么事? 
+
+---
+## 搜索算法
+
+- .red[搜索最小值]
+
+```python
+def indexOfMin(lyst):
+
+    minIndex = 0
+    currentIndex = 1
+        while currentIndex &lt; len(lyst):
+            if lyst[currentIndex] &lt; lyst[minIndex]:
+                minIndex = currentIndex
+            currentIndex += 1
+    return minIndex
+```
+
+---
+## 搜索算法
+
+- .red[顺序搜索一个列表]
+
+```python
+def sequentialSearch(target, lyst):
+  
+  position = 0
+  while position &lt; len(lyst):
+    if target == lyst[position]:
+      return position
+    position += 1
+  return -1
+```
+
+--
+- 问题: 最好情况、最坏情况和平均情况的性能?
+
+---
+## 搜索算法
+
+- .red[有序列表的二叉搜索]
+
+```python
+def binarySearch(target, sortedLyst):
+
+  left = 0
+  right = len(sortedLyst) - 1
+  while left &lt;= right:
+    midpoint = (left + right) // 2
+    if target == sortedLyst[midpoint]:
+      return midpoint
+    elif target &lt; sortedLyst[midpoint]:
+      right = midpoint - 1
+    else:
+      left = midpoint + 1
+  return -1
+```
+
+--
+
+- 二叉搜索的最坏情况的时间复杂度为?
+
+
+---
+## 搜索算法
+
+&lt;iframe width="800" height="1200" frameborder="0" src="http://pythontutor.com/iframe-embed.html#code=def%20binarySearch%28target,%20sortedLyst%29%3A%0A%20%20%20%20left%20%3D%200%0A%20%20%20%20right%20%3D%20len%28sortedLyst%29%20-%201%0A%20%20%20%20while%20left%20%3C%3D%20right%3A%0A%20%20%20%20%20%20%20%20midpoint%20%3D%20%28left%20%2B%20right%29%20//%202%0A%20%20%20%20%20%20%20%20if%20target%20%3D%3D%20sortedLyst%5Bmidpoint%5D%3A%0A%20%20%20%20%20%20%20%20%20%20return%20midpoint%0A%20%20%20%20%20%20%20%20elif%20target%20%3C%20sortedLyst%5Bmidpoint%5D%3A%0A%20%20%20%20%20%20%20%20%20%20right%20%3D%20midpoint%20-%201%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20left%20%3D%20midpoint%20%2B%201%0A%20%20%20%20return%20-1%0A%0Al%20%3D%20%5B20,%2044,%2048,%2055,%2062,%2066,%2074,%2088,%2093,%2099%5D%0AbinarySearch%2890,%20l%29&amp;codeDivHeight=400&amp;codeDivWidth=350&amp;cumulative=false&amp;curInstr=24&amp;heapPrimitives=false&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false"&gt; &lt;/iframe&gt;
+
+
+---
+## 搜索算法
+
+.red[比较数据项]
+
+- 二叉搜索与搜索最小项, 都是假设列表中的项都是可以互相比较的
+- 在 Python 中, 数字、字符串都是可比的
+- 如何对一个特殊的对象添加"比较"功能？
+
+--
+
+- 为对象添加 `__eq__`, `__lt__`, `__gt__` 方法
+
+---
+## 搜索算法
+
+```python
+class SavingAccount(object):
+
+  def __init__(self, name, pin, balance = 0.0):
+    self.name = name
+    self.pin = pin
+    self.balance = balance
+
+  def __lt__(self, other):
+    return self.name &lt; other.name
+
+  def __gt__(self, other):
+    return self.name &gt; other.name
+
+  def __eq__(self, other):
+    return self.name == other.name
+```
+
+--
+
+- [可视化](http://pythontutor.com/visualize.html#code=class%20SavingAccount%28object%29%3A%0A%20%20%22%22%22This%20class%20represents%20a%20saving%20account%20with%0A%20%20the%20owner's%20name,%20PIN,%20and%20balance.%22%22%22%0A%20%20%0A%20%20def%20__init__%28self,%20name,%20pin,%20balance%20%3D%200.0%29%3A%0A%20%20%20%20self.name%20%3D%20name%0A%20%20%20%20self.pin%20%3D%20pin%0A%20%20%20%20self.balance%20%3D%20balance%0A%20%20def%20__lt__%28self,%20other%29%3A%0A%20%20%20%20return%20self.name%20%3C%20other.name%0A%20%20%20%20%0A%20%20def%20__gt__%28self,%20other%29%3A%0A%20%20%20%20return%20self.name%20%3E%20other.name%0A%20%20%20%20%0A%20%20def%20__eq__%28self,%20other%29%3A%0A%20%20%20%20return%20self.name%20%3D%3D%20other.name%0A%20%20%20%20%0As1%20%3D%20SavingAccount%28%22Ken%22,%20%221000%22,%200%29%0As2%20%3D%20SavingAccount%28%22Bill%22,%20%221001%22,%2030%29%0A%0Aprint%28s1%20%3C%20s2%29&amp;cumulative=false&amp;heapPrimitives=false&amp;mode=edit&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false)
+- 这样就可以将账户放置在列表中并且按照姓名来进行查找了
+
+---
+## 基本排序算法
+
+- .red[冒泡排序]
+
+```python
+def bubbleSort(lyst):
+  
+  n = len(lyst)
+  
+  while n &gt; 1:
+    i = 1
+    while i &lt; n:
+      if lyst[i] &lt; lyst[i-1]:
+        lyst[i], lyst[i-1] = lyst[i-1], lyst[i]
+      i += 1
+    n -= 1
+```
+
+--
+
+- [可视化](http://pythontutor.com/visualize.html#code=def%20bubbleSort%28lyst%29%3A%0A%20%20%0A%20%20n%20%3D%20len%28lyst%29%0A%20%20%0A%20%20while%20n%20%3E%201%3A%0A%20%20%20%20i%20%3D%201%0A%20%20%20%20while%20i%20%3C%20n%3A%0A%20%20%20%20%20%20if%20lyst%5Bi%5D%20%3C%20lyst%5Bi-1%5D%3A%0A%20%20%20%20%20%20%20%20lyst%5Bi%5D,%20lyst%5Bi-1%5D%20%3D%20lyst%5Bi-1%5D,%20lyst%5Bi%5D%0A%20%20%20%20%20%20i%20%2B%3D%201%0A%20%20%20%20n%20-%3D%201%0A%20%20%20%20%0Al%20%3D%20%5B10,%208,%201,%203,%209,%205%5D%0A%0AbubbleSort%28l%29&amp;cumulative=false&amp;curInstr=59&amp;heapPrimitives=false&amp;mode=display&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false)
+- 冒泡排序的时间复杂度是？空间复杂度是？
+
+---
+## 基本排序算法
+
+- .red[选择排序]
+
+```python
+def selectionSort(lyst):
+   i = 0
+   while i &lt; len(lyst) - 1:
+    minIndex = i
+    j = i + 1
+    while j &lt;len(lyst):
+      if lyst[j] &lt; lyst[minIndex]:
+        minIndex = j
+      j += 1
+    if minIndex != i:
+      lyst[minIndex], lyst[i] = lyst[i], lyst[minIndex]
+    i += 1
+```
+
+--
+
+- [可视化](http://pythontutor.com/visualize.html#code=def%20selectionSort%28lyst%29%3A%0A%20%20%20i%20%3D%200%0A%20%20%20while%20i%20%3C%20len%28lyst%29%20-%201%3A%0A%20%20%20%20minIndex%20%3D%20i%0A%20%20%20%20j%20%3D%20i%20%2B%201%0A%20%20%20%20while%20j%20%3Clen%28lyst%29%3A%0A%20%20%20%20%20%20if%20lyst%5Bj%5D%20%3C%20lyst%5BminIndex%5D%3A%0A%20%20%20%20%20%20%20%20minIndex%20%3D%20j%0A%20%20%20%20%20%20j%20%2B%3D%201%0A%20%20%20%20if%20minIndex%20!%3D%20i%3A%0A%20%20%20%20%20%20lyst%5BminIndex%5D,%20lyst%5Bi%5D%20%3D%20lyst%5Bi%5D,%20lyst%5BminIndex%5D%0A%20%20%20%20i%20%2B%3D%201%0A%20%20%20%20%0Al%20%3D%20%5B10,%208,%201,%203,%209,%205%5D%0A%0AselectionSort%28l%29&amp;cumulative=false&amp;curInstr=81&amp;heapPrimitives=false&amp;mode=display&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false)
+- 选择排序的时间复杂度是？空间复杂度是？
+
+
+---
+## 基本排序算法
+
+- .red[插入排序]
+
+
+```python
+def insertSort(lyst):
+  i = 1
+  while i &lt; len(lyst):
+    itemToInsert = lyst[i]
+    j = i - 1
+    while j &gt;= 0:
+      if itemToInsert &lt; lyst[j]:
+        lyst[j + 1] = lyst[j]
+        j -= 1
+      else:
+        break
+    lyst[j + 1] = itemToInsert
+    i += 1
+```
+
+--
+
+- [可视化](http://pythontutor.com/visualize.html#code=def%20insertSort%28lyst%29%3A%0A%20%20i%20%3D%201%0A%20%20while%20i%20%3C%20len%28lyst%29%3A%0A%20%20%20%20itemToInsert%20%3D%20lyst%5Bi%5D%0A%20%20%20%20j%20%3D%20i%20-%201%0A%20%20%20%20while%20j%20%3E%3D%200%3A%0A%20%20%20%20%20%20if%20itemToInsert%20%3C%20lyst%5Bj%5D%3A%0A%20%20%20%20%20%20%20%20lyst%5Bj%20%2B%201%5D%20%3D%20lyst%5Bj%5D%0A%20%20%20%20%20%20%20%20j%20-%3D%201%0A%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20break%0A%20%20%20%20lyst%5Bj%20%2B%201%5D%20%3D%20itemToInsert%0A%20%20%20%20i%20%2B%3D%201%0A%20%20%20%20%0Al%20%3D%20%5B10,%208,%201,%203,%209,%205%5D%0A%0AinsertSort%28l%29&amp;cumulative=false&amp;curInstr=79&amp;heapPrimitives=false&amp;mode=display&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false)
+- 插入排序的时间复杂度是？空间复杂度是？
+
+---
+## 快速排序
     </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
@@ -694,16 +893,57 @@ for i in range(n):
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
 })();</script>
 
 <script>
 (function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -717,7 +957,8 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     i++;
   }
-})();
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
