@@ -15,6 +15,8 @@ output:
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(tidy = FALSE, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center')
+library(knitr)
 library(kableExtra)
 ```
 
@@ -680,13 +682,12 @@ def indexOfMin(lyst):
 
 ```python
 def sequentialSearch(target, lyst):
-  
-  position = 0
-  while position < len(lyst):
-    if target == lyst[position]:
-      return position
-    position += 1
-  return -1
+    position = 0
+    while position < len(lyst):
+        if target == lyst[position]:
+            return position
+        position += 1
+    return -1
 ```
 
 --
@@ -700,17 +701,17 @@ def sequentialSearch(target, lyst):
 ```python
 def binarySearch(target, sortedLyst):
 
-  left = 0
-  right = len(sortedLyst) - 1
-  while left <= right:
-    midpoint = (left + right) // 2
-    if target == sortedLyst[midpoint]:
-      return midpoint
-    elif target < sortedLyst[midpoint]:
-      right = midpoint - 1
-    else:
-      left = midpoint + 1
-  return -1
+    left = 0
+    right = len(sortedLyst) - 1
+    while left <= right:
+        midpoint = (left + right) // 2
+        if target == sortedLyst[midpoint]:
+            return midpoint
+        elif target < sortedLyst[midpoint]:
+            right = midpoint - 1
+        else:
+            left = midpoint + 1
+    return -1
 ```
 
 --
@@ -743,104 +744,286 @@ def binarySearch(target, sortedLyst):
 ```python
 class SavingAccount(object):
 
-  def __init__(self, name, pin, balance = 0.0):
-    self.name = name
-    self.pin = pin
-    self.balance = balance
-
-  def __lt__(self, other):
-    return self.name < other.name
-
-  def __gt__(self, other):
-    return self.name > other.name
-
-  def __eq__(self, other):
-    return self.name == other.name
+    def __init__(self, name, pin, balance = 0.0):
+        self.name = name
+        self.pin = pin
+        self.balance = balance
+    
+    def __lt__(self, other):
+        return self.name < other.name
+    
+    def __gt__(self, other):
+        return self.name > other.name
+    
+    def __eq__(self, other):
+        return self.name == other.name
 ```
 
 --
 
-- [可视化](http://pythontutor.com/visualize.html#code=class%20SavingAccount%28object%29%3A%0A%20%20%22%22%22This%20class%20represents%20a%20saving%20account%20with%0A%20%20the%20owner's%20name,%20PIN,%20and%20balance.%22%22%22%0A%20%20%0A%20%20def%20__init__%28self,%20name,%20pin,%20balance%20%3D%200.0%29%3A%0A%20%20%20%20self.name%20%3D%20name%0A%20%20%20%20self.pin%20%3D%20pin%0A%20%20%20%20self.balance%20%3D%20balance%0A%20%20def%20__lt__%28self,%20other%29%3A%0A%20%20%20%20return%20self.name%20%3C%20other.name%0A%20%20%20%20%0A%20%20def%20__gt__%28self,%20other%29%3A%0A%20%20%20%20return%20self.name%20%3E%20other.name%0A%20%20%20%20%0A%20%20def%20__eq__%28self,%20other%29%3A%0A%20%20%20%20return%20self.name%20%3D%3D%20other.name%0A%20%20%20%20%0As1%20%3D%20SavingAccount%28%22Ken%22,%20%221000%22,%200%29%0As2%20%3D%20SavingAccount%28%22Bill%22,%20%221001%22,%2030%29%0A%0Aprint%28s1%20%3C%20s2%29&cumulative=false&heapPrimitives=false&mode=edit&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false)
+- [代码演示](http://pythontutor.com/visualize.html#code=class%20SavingAccount%28object%29%3A%0A%20%20%22%22%22This%20class%20represents%20a%20saving%20account%20with%0A%20%20the%20owner's%20name,%20PIN,%20and%20balance.%22%22%22%0A%20%20%0A%20%20def%20__init__%28self,%20name,%20pin,%20balance%20%3D%200.0%29%3A%0A%20%20%20%20self.name%20%3D%20name%0A%20%20%20%20self.pin%20%3D%20pin%0A%20%20%20%20self.balance%20%3D%20balance%0A%20%20def%20__lt__%28self,%20other%29%3A%0A%20%20%20%20return%20self.name%20%3C%20other.name%0A%20%20%20%20%0A%20%20def%20__gt__%28self,%20other%29%3A%0A%20%20%20%20return%20self.name%20%3E%20other.name%0A%20%20%20%20%0A%20%20def%20__eq__%28self,%20other%29%3A%0A%20%20%20%20return%20self.name%20%3D%3D%20other.name%0A%20%20%20%20%0As1%20%3D%20SavingAccount%28%22Ken%22,%20%221000%22,%200%29%0As2%20%3D%20SavingAccount%28%22Bill%22,%20%221001%22,%2030%29%0A%0Aprint%28s1%20%3C%20s2%29&cumulative=false&heapPrimitives=false&mode=edit&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false)
 - 这样就可以将账户放置在列表中并且按照姓名来进行查找了
+
+---
+## 排序 (Sorting)
+
+- 排序是计算机中最重要的工作之一, 也是许多算法的重要组成部分, 在许多算法里需要对计算中使用的数据进行排序, 如二叉搜索.
+
+--
+
+- .red[基于比较的排序]
+  - 基于数据元素中的关键字及其比较操作的排序.
+
+- .red[内排序]
+  - 在执行过程中, 如果待排序列全部保存在内存中.
+
+- .red[外排序]
+  - 针对外寸 (硬盘、非本地存储等) 数据的排序工作.
+
+---
+## 排序的基本操作
+
+在基于关键字比较的排序算法中, 两种最重要的基本操作是:
+
+- 比较关键字的操作, 通过这种操作确定数据的顺序关系.
+- 移动数据记录的操作, 用于调整记录的位置和 (或) 顺序.
+
+--
+
+.quote[
+可以证明, 基于关键字比较的排序算法的时间复杂度不可能优于 $O(n\log n)$
+]
+
+
+---
+## 排序的稳定性
+
+如果某个排序算法能保证: 对于待排序列里任一对关键字相同的记录 $R_i$
+ 和 $R_j$, 在排序之后的序列里 $R_i$ 与 $R_j$ 的前后顺序不变, 则称这种排序算法是稳定的.
+
+--
+
+例: 现要按照绩点对全系学生进行排序. 在排序之前, 全体学生记录是按照年级分段存放的. 如果用一个稳定的排序算法进行排序, 在得到的结果中, 绩点相同的学生的记录也是按年级分段的. 而如果用一个不稳定的排序算法进行处理则各年级同学的记录将混乱交错.
 
 ---
 ## 基本排序算法
 
 - .red[冒泡排序]
+- [可视化](https://www.hackerearth.com/zh/practice/algorithms/sorting/bubble-sort/tutorial/)
 
 ```python
 def bubbleSort(lyst):
   
-  n = len(lyst)
-  
-  while n > 1:
-    i = 1
-    while i < n:
-      if lyst[i] < lyst[i-1]:
-        lyst[i], lyst[i-1] = lyst[i-1], lyst[i]
-      i += 1
-    n -= 1
+    n = len(lyst)
+    
+    while n > 1:
+        i = 1
+        while i < n:
+            if lyst[i] < lyst[i-1]:
+                lyst[i], lyst[i-1] = lyst[i-1], lyst[i]
+            i += 1
+        n -= 1
 ```
 
 --
 
-- [可视化](http://pythontutor.com/visualize.html#code=def%20bubbleSort%28lyst%29%3A%0A%20%20%0A%20%20n%20%3D%20len%28lyst%29%0A%20%20%0A%20%20while%20n%20%3E%201%3A%0A%20%20%20%20i%20%3D%201%0A%20%20%20%20while%20i%20%3C%20n%3A%0A%20%20%20%20%20%20if%20lyst%5Bi%5D%20%3C%20lyst%5Bi-1%5D%3A%0A%20%20%20%20%20%20%20%20lyst%5Bi%5D,%20lyst%5Bi-1%5D%20%3D%20lyst%5Bi-1%5D,%20lyst%5Bi%5D%0A%20%20%20%20%20%20i%20%2B%3D%201%0A%20%20%20%20n%20-%3D%201%0A%20%20%20%20%0Al%20%3D%20%5B10,%208,%201,%203,%209,%205%5D%0A%0AbubbleSort%28l%29&cumulative=false&curInstr=59&heapPrimitives=false&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false)
-- 冒泡排序的时间复杂度是？空间复杂度是？
+- [代码演示](http://pythontutor.com/visualize.html#code=def%20bubbleSort%28lyst%29%3A%0A%20%20%0A%20%20n%20%3D%20len%28lyst%29%0A%20%20%0A%20%20while%20n%20%3E%201%3A%0A%20%20%20%20i%20%3D%201%0A%20%20%20%20while%20i%20%3C%20n%3A%0A%20%20%20%20%20%20if%20lyst%5Bi%5D%20%3C%20lyst%5Bi-1%5D%3A%0A%20%20%20%20%20%20%20%20lyst%5Bi%5D,%20lyst%5Bi-1%5D%20%3D%20lyst%5Bi-1%5D,%20lyst%5Bi%5D%0A%20%20%20%20%20%20i%20%2B%3D%201%0A%20%20%20%20n%20-%3D%201%0A%20%20%20%20%0Al%20%3D%20%5B10,%208,%201,%203,%209,%205%5D%0A%0AbubbleSort%28l%29&cumulative=false&curInstr=59&heapPrimitives=false&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false)
+- 冒泡排序的时间复杂度是？空间复杂度是？是稳定的么?
 
 ---
 ## 基本排序算法
 
 - .red[选择排序]
+- [可视化](https://www.hackerearth.com/zh/practice/algorithms/sorting/selection-sort/tutorial/)
 
 ```python
 def selectionSort(lyst):
-   i = 0
-   while i < len(lyst) - 1:
-    minIndex = i
-    j = i + 1
-    while j <len(lyst):
-      if lyst[j] < lyst[minIndex]:
-        minIndex = j
-      j += 1
-    if minIndex != i:
-      lyst[minIndex], lyst[i] = lyst[i], lyst[minIndex]
-    i += 1
+     i = 0
+     while i < len(lyst) - 1:
+        minIndex = i
+        j = i + 1
+        while j <len(lyst):
+            if lyst[j] < lyst[minIndex]:
+                minIndex = j
+            j += 1
+        if minIndex != i:
+            lyst[minIndex], lyst[i] = lyst[i], lyst[minIndex]
+        i += 1
 ```
 
 --
 
-- [可视化](http://pythontutor.com/visualize.html#code=def%20selectionSort%28lyst%29%3A%0A%20%20%20i%20%3D%200%0A%20%20%20while%20i%20%3C%20len%28lyst%29%20-%201%3A%0A%20%20%20%20minIndex%20%3D%20i%0A%20%20%20%20j%20%3D%20i%20%2B%201%0A%20%20%20%20while%20j%20%3Clen%28lyst%29%3A%0A%20%20%20%20%20%20if%20lyst%5Bj%5D%20%3C%20lyst%5BminIndex%5D%3A%0A%20%20%20%20%20%20%20%20minIndex%20%3D%20j%0A%20%20%20%20%20%20j%20%2B%3D%201%0A%20%20%20%20if%20minIndex%20!%3D%20i%3A%0A%20%20%20%20%20%20lyst%5BminIndex%5D,%20lyst%5Bi%5D%20%3D%20lyst%5Bi%5D,%20lyst%5BminIndex%5D%0A%20%20%20%20i%20%2B%3D%201%0A%20%20%20%20%0Al%20%3D%20%5B10,%208,%201,%203,%209,%205%5D%0A%0AselectionSort%28l%29&cumulative=false&curInstr=81&heapPrimitives=false&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false)
-- 选择排序的时间复杂度是？空间复杂度是？
+- [代码演示](http://pythontutor.com/visualize.html#code=def%20selectionSort%28lyst%29%3A%0A%20%20%20i%20%3D%200%0A%20%20%20while%20i%20%3C%20len%28lyst%29%20-%201%3A%0A%20%20%20%20minIndex%20%3D%20i%0A%20%20%20%20j%20%3D%20i%20%2B%201%0A%20%20%20%20while%20j%20%3Clen%28lyst%29%3A%0A%20%20%20%20%20%20if%20lyst%5Bj%5D%20%3C%20lyst%5BminIndex%5D%3A%0A%20%20%20%20%20%20%20%20minIndex%20%3D%20j%0A%20%20%20%20%20%20j%20%2B%3D%201%0A%20%20%20%20if%20minIndex%20!%3D%20i%3A%0A%20%20%20%20%20%20lyst%5BminIndex%5D,%20lyst%5Bi%5D%20%3D%20lyst%5Bi%5D,%20lyst%5BminIndex%5D%0A%20%20%20%20i%20%2B%3D%201%0A%20%20%20%20%0Al%20%3D%20%5B10,%208,%201,%203,%209,%205%5D%0A%0AselectionSort%28l%29&cumulative=false&curInstr=81&heapPrimitives=false&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false)
+- 选择排序的时间复杂度是？空间复杂度是？是稳定的么?
 
 
 ---
 ## 基本排序算法
 
 - .red[插入排序]
-
+- [可视化](https://www.hackerearth.com/zh/practice/algorithms/sorting/insertion-sort/tutorial/)
 
 ```python
 def insertSort(lyst):
-  i = 1
-  while i < len(lyst):
-    itemToInsert = lyst[i]
-    j = i - 1
-    while j >= 0:
-      if itemToInsert < lyst[j]:
-        lyst[j + 1] = lyst[j]
-        j -= 1
-      else:
-        break
-    lyst[j + 1] = itemToInsert
-    i += 1
+    i = 1
+    while i < len(lyst):
+        itemToInsert = lyst[i]
+        j = i - 1
+        while j >= 0:
+            if itemToInsert < lyst[j]:
+                lyst[j + 1] = lyst[j]
+                j -= 1
+            else:
+                break
+        lyst[j + 1] = itemToInsert
+        i += 1
 ```
 
 --
 
-- [可视化](http://pythontutor.com/visualize.html#code=def%20insertSort%28lyst%29%3A%0A%20%20i%20%3D%201%0A%20%20while%20i%20%3C%20len%28lyst%29%3A%0A%20%20%20%20itemToInsert%20%3D%20lyst%5Bi%5D%0A%20%20%20%20j%20%3D%20i%20-%201%0A%20%20%20%20while%20j%20%3E%3D%200%3A%0A%20%20%20%20%20%20if%20itemToInsert%20%3C%20lyst%5Bj%5D%3A%0A%20%20%20%20%20%20%20%20lyst%5Bj%20%2B%201%5D%20%3D%20lyst%5Bj%5D%0A%20%20%20%20%20%20%20%20j%20-%3D%201%0A%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20break%0A%20%20%20%20lyst%5Bj%20%2B%201%5D%20%3D%20itemToInsert%0A%20%20%20%20i%20%2B%3D%201%0A%20%20%20%20%0Al%20%3D%20%5B10,%208,%201,%203,%209,%205%5D%0A%0AinsertSort%28l%29&cumulative=false&curInstr=79&heapPrimitives=false&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false)
-- 插入排序的时间复杂度是？空间复杂度是？
+- [代码演示](http://pythontutor.com/visualize.html#code=def%20insertSort%28lyst%29%3A%0A%20%20i%20%3D%201%0A%20%20while%20i%20%3C%20len%28lyst%29%3A%0A%20%20%20%20itemToInsert%20%3D%20lyst%5Bi%5D%0A%20%20%20%20j%20%3D%20i%20-%201%0A%20%20%20%20while%20j%20%3E%3D%200%3A%0A%20%20%20%20%20%20if%20itemToInsert%20%3C%20lyst%5Bj%5D%3A%0A%20%20%20%20%20%20%20%20lyst%5Bj%20%2B%201%5D%20%3D%20lyst%5Bj%5D%0A%20%20%20%20%20%20%20%20j%20-%3D%201%0A%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20break%0A%20%20%20%20lyst%5Bj%20%2B%201%5D%20%3D%20itemToInsert%0A%20%20%20%20i%20%2B%3D%201%0A%20%20%20%20%0Al%20%3D%20%5B10,%208,%201,%203,%209,%205%5D%0A%0AinsertSort%28l%29&cumulative=false&curInstr=79&heapPrimitives=false&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false)
+- 插入排序的时间复杂度是？空间复杂度是？是稳定的么?
+
+---
+## 插入排序
+
+.quote[
+插入排序不适合对于数据量比较大的排序应用. 但是, 如果需要排序的数据量很小, 例如, 量级小于千, 那么插入排序还是一个不错的选择. 插入排序在工业级库中也有着广泛的应用，在 STL 的 sort 算法和 stdlib 的 qsort 算法中, 都将插入排序作为快速排序的补充, 用于少量元素的排序 (通常为8个或以下)
+]
+
 
 ---
 ## 快速排序
 
+.quote[
+快速排序, 又称划分交换排序 (partition-exchange sort), 是一种排序算法, 最早由英国计算机科学家 C. A. R. Hoare 于 1962 年提出. 它采用了分治法的思想, 在各种基于关键字比较的算法中, 快速排序是实践中平均速度最快的算法. 快速排序算法还被评为 “20 世纪最具影响力的十个算法” 之一.
+]
 
+---
+## 快速排序
+
+.red[算法描述]
+
+快速排序使用分治法策略把一个序列分为两个子序列
+
+1. 从数列中挑出一个元素, 称为 “基准” (pivot)
+2. 重新排序数列, 所有比基准值小的元素移动到基准前, 所有比基准值大的移动到基准后 (相同的数可以到任一边). 这个操作结束后, 该基准就处于数列的中间位置. 这称为分割操作 (partition).
+3. 递归的把小于基准值元素的子序列和大于基准值元素的子序列排序. 当序列长度是 0 或 1 时, 递归结束.
+
+---
+## 快速排序: 例
+
+- 选择 54 为基准
+
+```{r}
+include_graphics("firstsplit.png")
+```
+
+--
+
+- 分割操作
+    - 增加 ``leftmark`` 直到对应值大于基准
+    - 减少 ``rightmark`` 直到对应值小于基准
+    - 交换 ``leftmark`` 与 ``rightmark`` 对应元素
+    - 当 ``rightmark`` < ``leftmark`` 时分割结束
+
+---
+## 快速排序: 例
+
+```{r}
+include_graphics("partitionA.png")
+```
+
+---
+## 快速排序: 例
+
+- 对子序列递归
+
+```{r}
+include_graphics("partitionB.png")
+```
+
+--
+- [可视化](https://www.hackerearth.com/zh/practice/algorithms/sorting/quick-sort/tutorial/)
+
+---
+## 快速排序
+
+```python
+def quickSortHelper(alist, first, last):
+
+    if first < last:
+        splitpoint = partition(alist, first, last)
+        quickSortHelper(alist, first, splitpoint-1)
+        quickSortHelper(alist, splitpoint+1, last)
+
+def quickSort(alist):
+    quickSortHelper(alist, 0, len(alist)-1)
+```
+
+---
+## 快速排序
+
+```python
+def partition(alist, first, last):
+
+    pivot = alist[first]
+    leftmark = first + 1
+    rightmark = last
+
+    done = False
+    while not done:
+        while leftmark <= rightmark and alist[leftmark] <= pivot:
+            leftmark += 1
+
+        while leftmark <= rightmark and alist[rightmark] >= pivot:
+            rightmark -= 1
+
+        if leftmark < rightmark:
+            alist[leftmark], alist[rightmark] = alist[rightmark], alist[leftmark]
+        else:
+            done = True
+
+    alist[rightmark], alist[first] = alist[first], alist[rightmark]
+
+    return rightmark
+```
+
+--
+
+- [代码演示](http://pythontutor.com/visualize.html#code=def%20partition%28alist,%20first,%20last%29%3A%0A%20%20%20%20%0A%20%20%20%20pivot%20%3D%20alist%5Bfirst%5D%0A%20%20%20%20leftmark%20%3D%20first%20%2B%201%0A%20%20%20%20rightmark%20%3D%20last%0A%0A%20%20%20%20done%20%3D%20False%0A%20%20%20%20while%20not%20done%3A%0A%20%20%20%20%20%20%20%20while%20leftmark%20%3C%3D%20rightmark%20and%20alist%5Bleftmark%5D%20%3C%3D%20pivot%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20leftmark%20%2B%3D%201%0A%0A%20%20%20%20%20%20%20%20while%20leftmark%20%3C%3D%20rightmark%20and%20alist%5Brightmark%5D%20%3E%3D%20pivot%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20rightmark%20-%3D%201%0A%0A%20%20%20%20%20%20%20%20if%20leftmark%20%3C%20rightmark%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20alist%5Bleftmark%5D,%20alist%5Brightmark%5D%20%3D%20alist%5Brightmark%5D,%20alist%5Bleftmark%5D%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20done%20%3D%20True%0A%0A%20%20%20%20alist%5Brightmark%5D,%20alist%5Bfirst%5D%20%3D%20alist%5Bfirst%5D,%20alist%5Brightmark%5D%0A%0A%20%20%20%20return%20rightmark%0A%0A%0Adef%20quickSortHelper%28alist,%20first,%20last%29%3A%0A%0A%20%20%20%20if%20first%20%3C%20last%3A%0A%20%20%20%20%20%20%20%20splitpoint%20%3D%20partition%28alist,%20first,%20last%29%0A%20%20%20%20%20%20%20%20quickSortHelper%28alist,%20first,%20splitpoint-1%29%0A%20%20%20%20%20%20%20%20quickSortHelper%28alist,%20splitpoint%2B1,%20last%29%0A%0Adef%20quickSort%28alist%29%3A%0A%20%20%20%20quickSortHelper%28alist,%200,%20len%28alist%29-1%29%0A%0A%0Aalist%20%3D%20%5B54,26,93,17,77,31,44,55,20%5D%0AquickSort%28alist%29%0Aprint%28alist%29&cumulative=false&curInstr=82&heapPrimitives=false&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false)
+
+---
+## 快速排序的复杂度
+
+- 时间复杂度
+  - 如果每次划分都能把所处理区域分成长度基本相等的两段, 由主定理可得时间复杂度为 $O(n\log n)$
+  - 如果每次划分得到的两段中总有一个未空, 则 $T(n)=T(n-1)+O(n)$, 则有最差情况时间复杂度为 $O(n^2)$
+  - 因此 **快速排序的时间复杂度与基准的选取相关**
+
+--
+
+- 空间复杂度
+    快速排序的空间开销主要用于递归时解释器运行时使用的栈空间, 与具体的实现有关. 一般认为其空间复杂度为 $O(\log n)$
+
+---
+## 快速排序的复杂度
+
+.quote[
+在平均情况下, 快速排序的时间复杂度为 $O(n\log n)$, 在最坏情况下则需要 $O(n^2)$, 但这种情况并不常见. 事实上, 通过恰当的选择基准, 快速排序通常明显比其他 $O(n\log n)$ 算法更快, 因为它的内部循环 (inner loop) 可以在大部分的架构上很有效率地被实现出来.
+]
+
+---
+## 练习:
+
+1. 对序列 [14, 17, 13, 15, 19, 10, 3, 16, 9, 12] 使用快速排序算法, 在两次分割操作之后, 该序列为?
+
+--
+
+2. 常用的一种基准选取方案称为 “middle of 3”, 即取序列中第一个、中间位置、最后一个, 3个数的中位数为基准. 采用这种方法对序列 [1, 20, 11, 5, 2, 9, 16, 14, 13, 19] 进行快速排序, 第一次分割采用的基准值为?
+
+--
+
+3. 快速排序算法是稳定的么?
+
+    
