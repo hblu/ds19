@@ -23,8 +23,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## 实验
 
-1. [Python 中的循环](ipython/python_loops.html), [ipynb 下载](ipython/python_loops.ipynb)
-2. [Python 中的列表](ipython/Python_List.html), [ipynb 下载](ipython/Python_List.ipynb)
+1. [Python 中的循环](ipython/python_loops.ipynb)
+2. [Python 中的列表](ipython/Python_List.ipynb)
+3. [递归](ipython/recursive.ipynb)
 <!-- 3. [栈和队列](ipython/stack_queue.html), [ipynb 下载](ipython/stack_queue.ipynb) -->
 <!-- 4. [链接表](ipython/linked_list.html), [ipynb 下载](ipython/linked_list.ipynb), [单链表的实现, ipynb](ipython/single_linked_list.ipynb) -->
 <!-- 5. [二叉树](ipython/BinaryTree.html), [ipynb 下载](ipython/BinaryTree.ipynb) -->
